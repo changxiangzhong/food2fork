@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Food2Fork</string>
+    <string name="search">Search</string>
+    <string name="hint_search_recipie">Search a recipie</string>
 </resources>
