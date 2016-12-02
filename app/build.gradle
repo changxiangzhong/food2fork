@@ -11,6 +11,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'BASE_URL', '"http://food2fork.com"'
+        buildConfigField 'String', 'API_KEY', '"b549c4c96152e677eb90de4604ca61a2"'
     }
     buildTypes {
         release {

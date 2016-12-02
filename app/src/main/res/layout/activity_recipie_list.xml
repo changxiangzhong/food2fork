@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.xzchang.food2fork.RecipieListActivity">
+    tools:context="com.xzchang.food2fork.view.RecipieListActivity">
 
     <FrameLayout
         android:id="@+id/fragment_container"
