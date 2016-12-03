@@ -1,6 +1,5 @@
 package com.xzchang.food2fork.rpc;
 
-import com.xzchang.food2fork.model.Recipie;
 import com.xzchang.food2fork.model.RecipieDetail;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,30 +27,30 @@ public class RecipieService {
     }
 
     public void searchRecipie(String keyword) {
-        Call<RecipieList> call = api.searchRecipies(keyword, null, null);
-        call.enqueue(new Callback<RecipieList>() {
+        Call<RecipieApi.RecipieList> call = api.searchRecipies(keyword, null, null);
+        call.enqueue(new Callback<RecipieApi.RecipieList>() {
             @Override
-            public void onResponse(Call<RecipieList> call, Response<RecipieList> response) {
+            public void onResponse(Call<RecipieApi.RecipieList> call, Response<RecipieApi.RecipieList> response) {
                 bus.post(new GetSearchEvent(response.body()));
             }
 
             @Override
-            public void onFailure(Call<RecipieList> call, Throwable t) {
+            public void onFailure(Call<RecipieApi.RecipieList> call, Throwable t) {
                 t.printStackTrace();
             }
         });
     }
 
-    public void fetchRecipieDetail(Recipie stub) {
-        Call<RecipieDetail> call = api.getRecipieDetail();
-        call.enqueue(new Callback<RecipieDetail>() {
+    public void fetchRecipieDetail(String recipieId) {
+        Call<RecipieApi.RecipieWrap> call = api.getRecipieDetail(recipieId);
+        call.enqueue(new Callback<RecipieApi.RecipieWrap>() {
             @Override
-            public void onResponse(Call<RecipieDetail> call, Response<RecipieDetail> response) {
-
+            public void onResponse(Call<RecipieApi.RecipieWrap> call, Response<RecipieApi.RecipieWrap> response) {
+                bus.post(new GetIngredient(response.body().getRecipie()));
             }
 
             @Override
-            public void onFailure(Call<RecipieDetail> call, Throwable t) {
+            public void onFailure(Call<RecipieApi.RecipieWrap> call, Throwable t) {
 
             }
         });

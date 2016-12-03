@@ -8,7 +8,7 @@ import com.xzchang.food2fork.model.Recipie;
 
 public class GetSearchEvent {
     public final Recipie[] recipies;
-    public GetSearchEvent(RecipieList body) {
+    public GetSearchEvent(RecipieApi.RecipieList body) {
         recipies = body.getRecipes();
     }
 }

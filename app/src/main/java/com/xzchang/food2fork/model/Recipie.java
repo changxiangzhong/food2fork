@@ -9,7 +9,7 @@ import java.net.URL;
  * Created by xiangzhc on 01/12/2016.
  */
 
-public class Recipie {
+public class Recipie implements Serializable {
     @SerializedName("recipe_id")
     private String recipieId;
     private String publisher;

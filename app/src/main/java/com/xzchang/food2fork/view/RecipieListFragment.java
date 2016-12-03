@@ -169,6 +169,7 @@ public class RecipieListFragment extends BaseFragment {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(getActivity(), RecipieDetailActivity.class);
+                    intent.putExtra(RecipieDetailFragment.PARAM_RECIPIE_STUB, r);
                     startActivity(intent);
                 }
             });

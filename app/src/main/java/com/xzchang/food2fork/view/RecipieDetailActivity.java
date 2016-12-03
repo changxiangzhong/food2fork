@@ -20,8 +20,9 @@ public class RecipieDetailActivity extends AppCompatActivity {
     }
 
     protected void initFragment() {
+        Serializable serializable = getIntent().getSerializableExtra(RecipieDetailFragment.PARAM_RECIPIE_STUB);
         FragmentManager manager = getSupportFragmentManager();
-        Fragment fragment = RecipieDetailFragment.newInstance();
+        Fragment fragment = RecipieDetailFragment.newInstance(serializable);
         manager.beginTransaction().add(R.id.fragment_container, fragment).commit();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
