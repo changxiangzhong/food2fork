@@ -4,4 +4,10 @@
     <string name="hint_search_recipie">Search a recipie</string>
     <string name="hello_blank_fragment">hello</string>
     <string name="empty_content">Empty content</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="info">Info</string>
+    <string name="view_instructions">View instructions</string>
+    <string name="view_original">View original</string>
+
+    <string name="popularity_string">Social rank: %1$s</string>
 </resources>

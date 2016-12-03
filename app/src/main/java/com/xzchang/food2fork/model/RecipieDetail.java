@@ -5,5 +5,9 @@ package com.xzchang.food2fork.model;
  */
 
 public class RecipieDetail extends Recipie {
-    String[] ingredients;
+    private String[] ingredients;
+
+    public String[] getIngredients() {
+        return ingredients;
+    }
 }

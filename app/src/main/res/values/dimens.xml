@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="list_item_icon_size">40dp</dimen>
     <dimen name="list_item_text_margin">16dp</dimen>
+    <dimen name="recipie_detail_label_height">16dp</dimen>
 </resources>
