@@ -106,13 +106,12 @@ public class RecipieDetailFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = super.onCreateView(inflater, container, savedInstanceState);
-        NumberFormat formatter = new DecimalFormat("#0.00");
         Picasso.with(inflater.getContext())
                 .load(stub.getImageUrl().toString())
                 .into(recipiePhoto);
 
         publisher.setText(stub.getPublisher());
-        popularityText.setText(getString(R.string.popularity_string, formatter.format(stub.getSocialRank())));
+        popularityText.setText(getString(R.string.popularity_string, stub.getSocialRank()));
         instructionButton.setPaintFlags(instructionButton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         instructionButton.setOnClickListener(new View.OnClickListener() {
             @Override
