@@ -7,7 +7,7 @@ import dagger.Subcomponent;
  * Created by xiangzhc on 22/11/2016.
  */
 
-@ActivityScope
+@FragmentScope
 @Subcomponent(
         modules = {
                 RecipieListComponent.RecipieListModule.class
