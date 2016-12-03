@@ -1,5 +1,7 @@
 package com.xzchang.food2fork.rpc;
 
+import org.greenrobot.eventbus.EventBus;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -13,11 +15,13 @@ import retrofit2.Retrofit;
  */
 @Singleton
 public class RecipieService {
-    private RecipieApi api;
+    private final RecipieApi api;
+    private final EventBus bus;
 
     @Inject
-    public RecipieService(Retrofit retrofit) {
+    public RecipieService(Retrofit retrofit, EventBus bus) {
         this.api = retrofit.create(RecipieApi.class);
+        this.bus = bus;
     }
 
     public void searchRecipie(String keyword) {
@@ -25,7 +29,7 @@ public class RecipieService {
         call.enqueue(new Callback<RecipieList>() {
             @Override
             public void onResponse(Call<RecipieList> call, Response<RecipieList> response) {
-                new GetSearchEvent(response.body());
+                bus.post(new GetSearchEvent(response.body()));
             }
 
             @Override

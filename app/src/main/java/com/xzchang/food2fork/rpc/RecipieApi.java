@@ -15,6 +15,10 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
  */
 
 public interface RecipieApi {
+    @GET("/api/get")
+    Call<Void> getRecipieDetail();
+
+
     @GET("/api/search")
     Call<RecipieList> searchRecipies(
             @Query("q") String searchQuery,
