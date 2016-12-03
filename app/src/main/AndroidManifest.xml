@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:name=".app.App"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.RecipieListActivity">
+        <activity android:name=".view.RecipieListActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

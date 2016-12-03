@@ -86,7 +86,12 @@ public class RecipieListFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         recipieList.setAdapter(new RecipieListAdapter());
-        recipieService.searchRecipie(null);
+        searchRecipie(null);
+    }
+
+    private void searchRecipie(String keyWord) {
+        getAdapter().clearRecipies();
+        recipieService.searchRecipie(keyWord);
         onStartLoading();
     }
 
@@ -101,9 +106,8 @@ public class RecipieListFragment extends BaseFragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getActivity(), "Search", Toast.LENGTH_LONG).show();
-                MenuItemCompat.collapseActionView(searchItem);
-                return false;
+                searchRecipie(query);
+                return true;
             }
 
             @Override
@@ -112,6 +116,18 @@ public class RecipieListFragment extends BaseFragment {
             }
         });
 
+        MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                searchRecipie(null);
+                return true;
+            }
+        });
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -148,22 +164,35 @@ public class RecipieListFragment extends BaseFragment {
 
         @Override
         public void onBindViewHolder(RecipieListItemViewHolder holder, int position) {
-            Recipie r = recipies.get(position);
+            final Recipie r = recipies.get(position);
             holder.title.setText(r.getTitle());
-            // Picasso.with(getContext()).load(r.getSourceUrl())
+            holder.itemRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
         }
 
         @Override
         public int getItemCount() {
             return recipies.size();
         }
+
+        public void clearRecipies() {
+            int size = recipies.size();
+            recipies.clear();
+            notifyItemRangeRemoved(0, size);
+        }
     }
 
     private static class RecipieListItemViewHolder extends RecyclerView.ViewHolder {
         private final ImageView icon;
-        public final TextView title;
+        private final TextView title;
+        private final View itemRoot;
         private RecipieListItemViewHolder(View itemView) {
             super(itemView);
+            itemRoot = itemView;
             icon = (ImageView) itemView.findViewById(R.id.recipie_icon);
             title = (TextView) itemView.findViewById(R.id.recipie_title);
         }
