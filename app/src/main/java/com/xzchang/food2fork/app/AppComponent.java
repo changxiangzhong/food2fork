@@ -3,6 +3,7 @@ package com.xzchang.food2fork.app;
 import android.app.Application;
 
 import com.xzchang.food2fork.network.RetrofitModule;
+import com.xzchang.food2fork.view.RecipieDetailComponent;
 import com.xzchang.food2fork.view.RecipieListComponent;
 
 import javax.inject.Singleton;
@@ -23,4 +24,5 @@ import dagger.Component;
 public interface AppComponent {
     Application app();
     RecipieListComponent plus(RecipieListComponent.RecipieListModule module);
+    RecipieDetailComponent plus(RecipieDetailComponent.RecipieDetailModule module);
 }

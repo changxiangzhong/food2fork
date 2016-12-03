@@ -1,5 +1,8 @@
 package com.xzchang.food2fork.rpc;
 
+import com.xzchang.food2fork.model.Recipie;
+import com.xzchang.food2fork.model.RecipieDetail;
+
 import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
@@ -35,6 +38,21 @@ public class RecipieService {
             @Override
             public void onFailure(Call<RecipieList> call, Throwable t) {
                 t.printStackTrace();
+            }
+        });
+    }
+
+    public void fetchRecipieDetail(Recipie stub) {
+        Call<RecipieDetail> call = api.getRecipieDetail();
+        call.enqueue(new Callback<RecipieDetail>() {
+            @Override
+            public void onResponse(Call<RecipieDetail> call, Response<RecipieDetail> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<RecipieDetail> call, Throwable t) {
+
             }
         });
     }

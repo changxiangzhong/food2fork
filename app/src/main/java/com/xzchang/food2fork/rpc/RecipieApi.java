@@ -2,6 +2,8 @@ package com.xzchang.food2fork.rpc;
 
 import android.support.annotation.StringDef;
 
+import com.xzchang.food2fork.model.RecipieDetail;
+
 import java.lang.annotation.Retention;
 
 import retrofit2.Call;
@@ -16,7 +18,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 public interface RecipieApi {
     @GET("/api/get")
-    Call<Void> getRecipieDetail();
+    Call<RecipieDetail> getRecipieDetail();
 
 
     @GET("/api/search")

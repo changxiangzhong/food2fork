@@ -16,7 +16,7 @@ public class RecipieListActivity extends AppCompatActivity {
         initFragment();
     }
 
-    private void initFragment() {
+    protected void initFragment() {
         FragmentManager manager = getSupportFragmentManager();
         Fragment fragment = RecipieListFragment.newInstance();
         manager.beginTransaction().add(R.id.fragment_container, fragment).commit();

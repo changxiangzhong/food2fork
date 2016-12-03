@@ -1,7 +1,7 @@
 package com.xzchang.food2fork.view;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,13 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.xzchang.food2fork.R;
 import com.xzchang.food2fork.app.AppComponent;
 import com.xzchang.food2fork.model.Recipie;
 import com.xzchang.food2fork.rpc.GetSearchEvent;
 import com.xzchang.food2fork.rpc.RecipieService;
+import com.xzchang.food2fork.util.CircleTransformation;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -41,8 +42,6 @@ public class RecipieListFragment extends BaseFragment {
 
     @BindView(R.id.recipie_list)
     RecyclerView recipieList;
-
-    public RecipieListFragment() {}
 
     public static RecipieListFragment newInstance() {
         return new RecipieListFragment();
@@ -169,9 +168,11 @@ public class RecipieListFragment extends BaseFragment {
             holder.itemRoot.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(getActivity(), RecipieDetailActivity.class);
+                    startActivity(intent);
                 }
             });
+            Picasso.with(getActivity()).load(r.getImageUrl().toString()).placeholder(R.drawable.recipie_image_placeholder).transform(new CircleTransformation()).into(holder.icon);
         }
 
         @Override
@@ -179,7 +180,7 @@ public class RecipieListFragment extends BaseFragment {
             return recipies.size();
         }
 
-        public void clearRecipies() {
+        private void clearRecipies() {
             int size = recipies.size();
             recipies.clear();
             notifyItemRangeRemoved(0, size);
