@@ -9,5 +9,5 @@
     <string name="view_instructions">View instructions</string>
     <string name="view_original">View original</string>
 
-    <string name="popularity_string">Social rank: %1$s</string>
+    <string name="popularity_string">Social rank: %.2f</string>
 </resources>
