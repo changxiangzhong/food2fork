@@ -2,6 +2,8 @@ package com.xzchang.food2fork.util.heteroadapter;
 
 import android.support.annotation.LayoutRes;
 
+import java.lang.reflect.Constructor;
+
 /**
  * Created by xiangzhc on 05/12/2016.
  */

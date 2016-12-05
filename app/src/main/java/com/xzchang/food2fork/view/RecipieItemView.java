@@ -2,6 +2,7 @@ package com.xzchang.food2fork.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +24,8 @@ import butterknife.ButterKnife;
  */
 
 public class RecipieItemView extends LinearLayout implements BindableView<RecipieItemView.RecipieViewModel> {
+    private static String TAG = RecipieItemView.class.getSimpleName();
+
     @BindView(R.id.recipie_icon)
     ImageView recipieIcon;
 
@@ -53,6 +56,7 @@ public class RecipieItemView extends LinearLayout implements BindableView<Recipi
     public void bind(RecipieViewModel viewModel) {
         Recipie r = viewModel.getWrapped();
         recipieTitle.setText(r.getTitle());
+        Log.v(TAG, "image_url to load = " + r.getImageUrl().toString());
         Picasso.with(getContext()).load(r.getImageUrl().toString()).placeholder(R.drawable.recipie_image_placeholder).transform(new CircleTransformation()).into(recipieIcon);
     }
 
