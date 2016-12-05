@@ -21,6 +21,7 @@ import com.xzchang.food2fork.app.AppComponent;
 import com.xzchang.food2fork.model.Recipie;
 import com.xzchang.food2fork.rpc.GetSearchEvent;
 import com.xzchang.food2fork.rpc.RecipieService;
+import com.xzchang.food2fork.util.heteroadapter.BindableView;
 import com.xzchang.food2fork.util.heteroadapter.BindableViewHolder;
 import com.xzchang.food2fork.util.heteroadapter.HeterogenousAdapter;
 
@@ -131,23 +132,41 @@ public class RecipieListFragment extends BaseFragment {
         onEndLoading();
     }
 
-    private static class RecipieListAdapter extends HeterogenousAdapter<RecipieListItemViewHolder> {
-
-        private RecipieListAdapter() {
-            super(RecipieListItemViewHolder.class);
-        }
+    private static class RecipieListAdapter extends HeterogenousAdapter<BindableViewHolder> {
 
         private void appendRecipies(Recipie[] newRecipies) {
             for (Recipie r: newRecipies) {
                 viewModels.add(new RecipieItemView.RecipieViewModel(r));
             }
+            viewModels.add(new ProgressFooterView.ProgressFooterViewModel(null));
             notifyDataSetChanged();
+        }
+
+        @Override
+        public BindableViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+
+            // This is ugly.
+            if (viewType == R.layout.footer_view_loading) {
+                return new ProgressFooterViewHolder(v);
+            } else if (viewType == R.layout.item_view_recipie){
+                return new RecipieListItemViewHolder(v);
+            }
+
+            return null;
         }
 
         private void clearRecipies() {
             int size = viewModels.size();
             viewModels.clear();
             notifyItemRangeRemoved(0, size);
+        }
+    }
+
+    public static class ProgressFooterViewHolder extends BindableViewHolder<ProgressFooterView.ProgressFooterViewModel> {
+
+        public ProgressFooterViewHolder(View itemView) {
+            super(itemView);
         }
     }
 

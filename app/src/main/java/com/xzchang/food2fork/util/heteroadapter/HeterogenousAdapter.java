@@ -17,16 +17,9 @@ import java.util.ArrayList;
 abstract public class HeterogenousAdapter<T extends BindableViewHolder> extends RecyclerView.Adapter<T> {
     private static final String TAG = HeterogenousAdapter.class.getSimpleName();
     protected final ArrayList<ViewModel> viewModels;
-    private Constructor<T> constructor;
 
-    public HeterogenousAdapter(Class<T> clazz) {
+    public HeterogenousAdapter() {
         viewModels = new ArrayList<>();
-        try {
-            constructor = clazz.getConstructor(View.class);
-        } catch (NoSuchMethodException e) {
-            Log.v(TAG, "Cannot find a proper constructor. Is the " + clazz.getSimpleName() + " standalone class? Non-static inner class is not acceptable ");
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -37,22 +30,6 @@ abstract public class HeterogenousAdapter<T extends BindableViewHolder> extends 
     @Override
     final public void onBindViewHolder(T holder, int position) {
         holder.bind(viewModels.get(position));
-    }
-
-    @Override
-    final public T onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-        try {
-            return constructor.newInstance(v);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     @Override
