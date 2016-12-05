@@ -26,8 +26,8 @@ public class RecipieService {
         this.bus = bus;
     }
 
-    public void searchRecipie(String keyword) {
-        Call<RecipieApi.RecipieList> call = api.searchRecipies(keyword, null, null);
+    public Call searchRecipie(String keyword, int page) {
+        Call<RecipieApi.RecipieList> call = api.searchRecipies(keyword, null, page);
         call.enqueue(new Callback<RecipieApi.RecipieList>() {
             @Override
             public void onResponse(Call<RecipieApi.RecipieList> call, Response<RecipieApi.RecipieList> response) {
@@ -39,6 +39,8 @@ public class RecipieService {
                 t.printStackTrace();
             }
         });
+
+        return call;
     }
 
     public void fetchRecipieDetail(String recipieId) {
