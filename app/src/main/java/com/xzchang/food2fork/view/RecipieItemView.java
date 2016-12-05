@@ -45,12 +45,8 @@ public class RecipieItemView extends LinearLayout implements BindableView<Recipi
     }
 
     public void initView(Context context, AttributeSet attrs, int defStyleAttr) {
-        try {
-            LayoutInflater.from(context).inflate(R.layout.item_view_recipie0, this, true);
-            ButterKnife.bind(this);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        LayoutInflater.from(context).inflate(R.layout.item_view_recipie0, this, true);
+        ButterKnife.bind(this);
     }
 
     @Override
