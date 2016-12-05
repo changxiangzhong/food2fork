@@ -1,5 +1,6 @@
 package com.xzchang.food2fork.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,22 +15,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
 import com.xzchang.food2fork.R;
 import com.xzchang.food2fork.app.AppComponent;
 import com.xzchang.food2fork.model.Recipie;
 import com.xzchang.food2fork.rpc.GetSearchEvent;
 import com.xzchang.food2fork.rpc.RecipieService;
-import com.xzchang.food2fork.util.CircleTransformation;
+import com.xzchang.food2fork.util.heteroadapter.BindableViewHolder;
+import com.xzchang.food2fork.util.heteroadapter.HeterogenousAdapter;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.inject.Inject;
 
@@ -135,68 +131,45 @@ public class RecipieListFragment extends BaseFragment {
         onEndLoading();
     }
 
-    private class RecipieListAdapter extends RecyclerView.Adapter<RecipieListItemViewHolder> {
-        private ArrayList<Recipie> recipies;
-
-        private RecipieListAdapter(ArrayList<Recipie> recipies) {
-            this.recipies = recipies;
-        }
+    private static class RecipieListAdapter extends HeterogenousAdapter<RecipieListItemViewHolder> {
 
         private RecipieListAdapter() {
-            this.recipies = new ArrayList<>();
+            super(RecipieListItemViewHolder.class);
         }
 
         private void appendRecipies(Recipie[] newRecipies) {
-            recipies.addAll(Arrays.asList(newRecipies));
+            for (Recipie r: newRecipies) {
+                viewModels.add(new RecipieItemView.RecipieViewModel(r));
+            }
             notifyDataSetChanged();
         }
 
-        private void appendRecipies(ArrayList<Recipie> newRecipies) {
-            recipies.addAll(newRecipies);
-        }
-
-        @Override
-        public RecipieListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view_recipie_list, parent, false);
-            return new RecipieListItemViewHolder(v);
-        }
-
-        @Override
-        public void onBindViewHolder(RecipieListItemViewHolder holder, int position) {
-            final Recipie r = recipies.get(position);
-            holder.title.setText(r.getTitle());
-            holder.itemRoot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), RecipieDetailActivity.class);
-                    intent.putExtra(RecipieDetailFragment.PARAM_RECIPIE_STUB, r);
-                    startActivity(intent);
-                }
-            });
-            Picasso.with(getActivity()).load(r.getImageUrl().toString()).placeholder(R.drawable.recipie_image_placeholder).transform(new CircleTransformation()).into(holder.icon);
-        }
-
-        @Override
-        public int getItemCount() {
-            return recipies.size();
-        }
-
         private void clearRecipies() {
-            int size = recipies.size();
-            recipies.clear();
+            int size = viewModels.size();
+            viewModels.clear();
             notifyItemRangeRemoved(0, size);
         }
     }
 
-    private static class RecipieListItemViewHolder extends RecyclerView.ViewHolder {
-        private final ImageView icon;
-        private final TextView title;
-        private final View itemRoot;
-        private RecipieListItemViewHolder(View itemView) {
+    public static class RecipieListItemViewHolder extends BindableViewHolder<RecipieItemView.RecipieViewModel> {
+        public RecipieListItemViewHolder(View itemView) {
             super(itemView);
-            itemRoot = itemView;
-            icon = (ImageView) itemView.findViewById(R.id.recipie_icon);
-            title = (TextView) itemView.findViewById(R.id.recipie_title);
+        }
+
+        @Override
+        public void bind(final RecipieItemView.RecipieViewModel viewModel) {
+            super.bind(viewModel);
+
+            getView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, RecipieDetailActivity.class);
+                    intent.putExtra(RecipieDetailFragment.PARAM_RECIPIE_STUB, viewModel.getWrapped());
+                    context.startActivity(intent);
+                }
+            });
+
         }
     }
 }

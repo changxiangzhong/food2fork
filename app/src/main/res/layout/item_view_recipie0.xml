@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:gravity="center_vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin">
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ImageView
         android:id="@+id/recipie_icon"
@@ -26,4 +19,4 @@
         android:ellipsize="end"
         android:layout_height="wrap_content"/>
 
-</LinearLayout>
+</merge>
