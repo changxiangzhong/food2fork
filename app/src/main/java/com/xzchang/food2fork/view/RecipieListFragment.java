@@ -1,5 +1,6 @@
 package com.xzchang.food2fork.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -130,9 +131,11 @@ public class RecipieListFragment extends BaseFragment {
         onEndLoading();
     }
 
-    private class RecipieListAdapter extends HeterogenousAdapter<RecipieListItemViewHolder> {
+    private static class RecipieListAdapter extends HeterogenousAdapter<RecipieListItemViewHolder> {
 
-        private RecipieListAdapter() {}
+        private RecipieListAdapter() {
+            super(RecipieListItemViewHolder.class);
+        }
 
         private void appendRecipies(Recipie[] newRecipies) {
             for (Recipie r: newRecipies) {
@@ -146,16 +149,10 @@ public class RecipieListFragment extends BaseFragment {
             viewModels.clear();
             notifyItemRangeRemoved(0, size);
         }
-
-        @Override
-        public RecipieListItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
-            return new RecipieListItemViewHolder(v);
-        }
     }
 
-    private class RecipieListItemViewHolder extends BindableViewHolder<RecipieItemView.RecipieViewModel> {
-        private RecipieListItemViewHolder(View itemView) {
+    public static class RecipieListItemViewHolder extends BindableViewHolder<RecipieItemView.RecipieViewModel> {
+        public RecipieListItemViewHolder(View itemView) {
             super(itemView);
         }
 
@@ -166,9 +163,10 @@ public class RecipieListFragment extends BaseFragment {
             getView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(getActivity(), RecipieDetailActivity.class);
+                    Context context = view.getContext();
+                    Intent intent = new Intent(context, RecipieDetailActivity.class);
                     intent.putExtra(RecipieDetailFragment.PARAM_RECIPIE_STUB, viewModel.getWrapped());
-                    startActivity(intent);
+                    context.startActivity(intent);
                 }
             });
 
